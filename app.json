@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "reminder",
+    "name": "Reminder App",
     "slug": "reminder",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -13,13 +13,13 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
+      "package": "com.sysinfo.reminder",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
@@ -27,6 +27,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "A Simple Application that tracks the time and reminds us to relax for a while."
   }
 }
