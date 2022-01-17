@@ -1,5 +1,5 @@
-import React, { useEffect, useReducer } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import React, { useEffect, useReducer, useState } from "react";
+import { StyleSheet, View, Text, Button } from "react-native";
 
 import AppUtil from "../util/AppUtil";
 import Action from "../model/Action";
@@ -20,6 +20,8 @@ const reducer = (state: Time, action: Action): Time => {
       return { ...state, minutes: state.minutes + 1 };
     case "RESET_MIN":
       return { ...state, minutes: 0 };
+    case "RESET_TIMER":
+      return initialState;
     default:
       return state;
   }
@@ -27,13 +29,26 @@ const reducer = (state: Time, action: Action): Time => {
 
 const Reminder = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [toggleTimer, setToggleTimer] = useState(false);
 
   const tick = () => {
     dispatch({ type: "INCREMENT_SEC" });
   };
 
+  const toggle = () => {
+    let isTimerRunning = !toggleTimer;
+    setToggleTimer(isTimerRunning);
+  };
+
+  const resetTimer = () => {
+    dispatch({type: "RESET_TIMER"});
+  };
+
   useEffect(() => {
-    const interval = setInterval(tick, 1000);
+    let interval;
+    if (toggleTimer) {
+      interval = setInterval(tick, 1000);
+    }
 
     if (state.seconds >= oneMinute) {
       dispatch({ type: "INCREMENT_MIN" });
@@ -43,7 +58,7 @@ const Reminder = () => {
     return () => {
       clearInterval(interval);
     };
-  }, [state.seconds]);
+  }, [state.seconds, toggleTimer]);
 
   return (
     <View>
@@ -52,6 +67,12 @@ const Reminder = () => {
       )}:${AppUtil.leftFillNum(state.minutes)}:${AppUtil.leftFillNum(
         state.seconds
       )}`}</Text>
+      <View>
+        <Button title={toggleTimer ? "STOP" : "START"} onPress={() => toggle()} />
+      </View>
+      <View style={styles.btnReset}>
+        <Button title="RESET" onPress={() => resetTimer()} disabled={state.seconds === 0 || toggleTimer}/>
+      </View>
     </View>
   );
 };
@@ -60,6 +81,10 @@ const styles = StyleSheet.create({
   timer: {
     fontSize: 80,
   },
+  btnReset: {
+    marginTop: 10,
+    color: 'red'
+  }
 });
 
 export default Reminder;

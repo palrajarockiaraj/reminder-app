@@ -13,7 +13,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -28,6 +30,6 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": "A Simple Application that tracks the time and reminds us to relax for a while."
+    "description": "A simple application that tracks the time and reminds us to relax for a while."
   }
 }
